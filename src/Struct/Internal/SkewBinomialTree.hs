@@ -4,9 +4,12 @@ import Data.Monoid
 import Data.Foldable
 
 data Tree a = Node Int a [a] [Tree a]
+     deriving (Show)
 
+rank :: Tree a -> Int
 rank (Node r _ _ _) = r
 
+root :: Tree a -> a
 root (Node _ x _ _) = x
 
 link :: Ord a => Tree a -> Tree a -> Tree a

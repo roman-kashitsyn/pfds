@@ -1,12 +1,12 @@
 module Struct.Heap.SkewHeap ( SkewHeap
                             , H.Heap(..)
-                            , fromList
-                            , F.toList
+                            , H.foldrHeap
+                            , H.toList
+                            , H.fromList
                             ) where
 
 import Prelude as P
 import Data.Monoid
-import Data.Foldable as F
 import qualified Struct.Interfaces.Heap as H
 import Struct.Internal.SkewBinomialTree
 
@@ -69,10 +69,10 @@ deleteMin = SH . del' . contents
                     in insertAll xs $ mergeTrees (reverse c) (normalize ts')
 
 fromList :: Ord a => [a] -> SkewHeap a
-fromList = P.foldr insert empty
+fromList = foldr insert empty
 
-instance Show a => Show (SkewHeap a) where
-    show h = "SkewHeap " ++ (show . P.concat . map toList . contents $ h)
+instance (Show a, Ord a) => Show (SkewHeap a) where
+    show h = "SkewHeap " ++ (show $ H.toList h)
 
 instance Ord a => Monoid (SkewHeap a) where
     mempty = empty
@@ -85,8 +85,3 @@ instance H.Heap SkewHeap where
     merge = merge
     findMin = findMin
     deleteMin = deleteMin
-
-instance Foldable SkewHeap where
-    foldMap f h
-        | isEmpty h = mempty
-        | otherwise = foldMap id . map (foldMap f) . contents $ h
