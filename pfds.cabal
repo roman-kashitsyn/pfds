@@ -1,0 +1,35 @@
+Name:          pfds
+Version:       0.1
+Synopsis:
+    Implementation of some purely functional data structures.
+License:       BSD3
+License-File:  LICENSE
+Author:        Roman Kashitsyn 
+Maintainer:    roman.kashitsyn@gmail.com
+Build-Type:    Simple
+Cabal-Version: >= 1.9.2
+
+Library
+  hs-source-dirs:   src
+  ghc-options:      -Wall
+  Exposed-Modules:  Struct.Interfaces.Queue,
+                    Struct.Interfaces.IndexedList,
+                    Struct.Interfaces.Heap,
+                    Struct.Queue.Queue,
+                    Struct.Queue.Deque,
+                    Struct.Heap.SkewHeap,
+                    Struct.List.SkewList
+  Other-Modules:    Struct.Internal.CompleteBinaryTree,
+                    Struct.Internal.SkewBinomialTree
+  build-depends:    base == 4.*
+
+Test-Suite Main
+  type:           exitcode-stdio-1.0
+  main-is:        RunTests.hs
+  build-depends:  base == 4.*,
+                  QuickCheck >= 2.4,
+                  HUnit,
+                  test-framework >= 0.4.1,
+                  test-framework-quickcheck2,
+                  test-framework-hunit
+  hs-source-dirs: src, test
